@@ -49,7 +49,7 @@ class LimitController extends _$LimitController {
   Future<void> setLimit(double? value) async {
     try {
       await ref.read(setLimitUseCaseProvider).call(value);
-      state = state.copyWith(limit: value, error: null);
+      state = state.copyWith(limit: value, error: null, setLimit: true);
     } catch (e) {
       state = state.copyWith(error: e.toString());
     }

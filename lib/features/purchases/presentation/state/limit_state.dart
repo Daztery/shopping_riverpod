@@ -5,9 +5,14 @@ class LimitState {
 
   const LimitState({this.limit, this.isLoading = false, this.error});
 
-  LimitState copyWith({double? limit, bool? isLoading, String? error}) {
+  LimitState copyWith({
+    double? limit,
+    bool? isLoading,
+    String? error,
+    bool setLimit = false,
+  }) {
     return LimitState(
-      limit: limit ?? this.limit,
+      limit: setLimit ? limit : this.limit,
       isLoading: isLoading ?? this.isLoading,
       error: error,
     );

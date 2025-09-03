@@ -46,7 +46,7 @@ class HomePage extends ConsumerWidget {
                       Expanded(
                         child: _StatTile(
                           label: 'Total',
-                          value: currency.format(total),
+                          value: "S/ $total",
                           color: exceeded ? Colors.red : null,
                         ),
                       ),
@@ -54,9 +54,7 @@ class HomePage extends ConsumerWidget {
                       Expanded(
                         child: _StatTile(
                           label: 'Limit',
-                          value: limitValue == null
-                              ? '—'
-                              : currency.format(limitValue),
+                          value: limitValue == null ? '—' : "S/ $limitValue",
                         ),
                       ),
                     ],
@@ -66,49 +64,65 @@ class HomePage extends ConsumerWidget {
                 Expanded(
                   child: products.items.isEmpty
                       ? const Center(child: Text('No products yet'))
-                      : ListView.separated(
-                          itemCount: products.items.length,
-                          separatorBuilder: (_, __) => const Divider(height: 0),
-                          itemBuilder: (context, index) {
-                            final p = products.items[index];
-                            return Dismissible(
-                              key: ValueKey(p.id),
-                              background: Container(
-                                color: Colors.red,
-                                alignment: Alignment.centerLeft,
-                                padding: const EdgeInsets.only(left: 16),
-                                child: const Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
+                      : Container(
+                          margin: const EdgeInsets.only(top: 12, bottom: 20),
+                          child: ListView.separated(
+                            itemCount: products.items.length,
+                            separatorBuilder: (_, __) =>
+                                const Divider(height: 0),
+                            itemBuilder: (context, index) {
+                              final p = products.items[index];
+                              return Dismissible(
+                                key: ValueKey(p.id),
+                                background: Container(
+                                  color: Colors.red,
+                                  alignment: Alignment.centerLeft,
+                                  padding: const EdgeInsets.only(left: 16),
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                              secondaryBackground: Container(
-                                color: Colors.red,
-                                alignment: Alignment.centerRight,
-                                padding: const EdgeInsets.only(right: 16),
-                                child: const Icon(
-                                  Icons.delete,
-                                  color: Colors.white,
+                                secondaryBackground: Container(
+                                  color: Colors.red,
+                                  alignment: Alignment.centerRight,
+                                  padding: const EdgeInsets.only(right: 16),
+                                  child: const Icon(
+                                    Icons.delete,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
-                              onDismissed: (_) => ref
-                                  .read(productsControllerProvider.notifier)
-                                  .remove(p.id),
-                              child: ProductTile(
-                                product: p,
-                                onTap: () => _showEditDialog(context, ref, p),
-                              ),
-                            );
-                          },
+                                onDismissed: (_) => ref
+                                    .read(productsControllerProvider.notifier)
+                                    .remove(p.id),
+                                child: ProductTile(
+                                  product: p,
+                                  onTap: () => _showEditDialog(context, ref, p),
+                                ),
+                              );
+                            },
+                          ),
                         ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                    left: 12,
+                    right: 12,
+                    bottom: 30,
+                    top: 6,
+                  ),
+                  width: double.infinity,
+                  child: TextButton(
+                    onPressed: () => _showAddDialog(context, ref),
+                    style: TextButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor: Colors.deepPurpleAccent,
+                    ),
+                    child: const Text('Add'),
+                  ),
                 ),
               ],
             ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _showAddDialog(context, ref),
-        icon: const Icon(Icons.add),
-        label: const Text('Add'),
-      ),
     );
   }
 
@@ -211,7 +225,6 @@ class HomePage extends ConsumerWidget {
             onPressed: () async {
               final txt = ctrl.text.trim();
               final val = txt.isEmpty ? null : double.tryParse(txt);
-              if (txt.isNotEmpty && val == null) return;
               await ref.read(limitControllerProvider.notifier).setLimit(val);
               Navigator.pop(context);
             },
@@ -250,12 +263,7 @@ class _StatTile extends StatelessWidget {
   final String value;
   final Color? color;
 
-  const _StatTile({
-    required this.label,
-    required this.value,
-    this.color,
-    super.key,
-  });
+  const _StatTile({required this.label, required this.value, this.color});
 
   @override
   Widget build(BuildContext context) {

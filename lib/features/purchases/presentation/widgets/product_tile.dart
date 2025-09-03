@@ -19,8 +19,8 @@ class ProductTile extends StatelessWidget {
         'Price: ${currency.format(product.price)}  •  Qty: ${product.quantity}',
       ),
       trailing: Text(
-        currency.format(subTotal),
-        style: const TextStyle(fontWeight: FontWeight.bold),
+        "S/ $subTotal",
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
       ),
       onTap: onTap,
     );
