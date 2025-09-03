@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 import '../controllers/products_controller.dart';
 import '../controllers/limit_controller.dart';
 import '../widgets/product_tile.dart';
@@ -13,7 +12,6 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final products = ref.watch(productsControllerProvider);
     final limit = ref.watch(limitControllerProvider);
-    final currency = NumberFormat.simpleCurrency();
 
     final total = products.total;
     final limitValue = limit.limit;
