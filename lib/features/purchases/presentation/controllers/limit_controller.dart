@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shopping_riverpod/core/di.dart';
 import 'package:shopping_riverpod/features/purchases/data/datasources/settings_local_datasource.dart';
@@ -11,11 +12,15 @@ import 'package:shopping_riverpod/features/purchases/presentation/state/limit_st
 part 'limit_controller.g.dart';
 
 @riverpod
+Box _settingsBox(Ref ref) {
+  return ref.watch(settingsBoxProvider);
+}
+
+@riverpod
 SettingsRepository settingsRepository(Ref ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return SettingsRepositoryImpl(
-    localDataSource: SettingsLocalDataSource(prefs: prefs),
-  );
+  final box = ref.watch(_settingsBoxProvider);
+  final ds = SettingsLocalDataSource(box: box);
+  return SettingsRepositoryImpl(localDataSource: ds);
 }
 
 @riverpod

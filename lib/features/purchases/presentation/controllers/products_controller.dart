@@ -1,9 +1,11 @@
 import 'dart:math';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive/hive.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shopping_riverpod/core/di.dart';
 import 'package:shopping_riverpod/features/purchases/data/datasources/purchases_local_datasource.dart';
+import 'package:shopping_riverpod/features/purchases/data/models/product_model.dart';
 import 'package:shopping_riverpod/features/purchases/data/repositories/products_repository_impl.dart';
 import 'package:shopping_riverpod/features/purchases/domain/entities/product.dart';
 import 'package:shopping_riverpod/features/purchases/domain/repositories/products_repository.dart';
@@ -16,11 +18,15 @@ import 'package:shopping_riverpod/features/purchases/presentation/state/products
 part 'products_controller.g.dart';
 
 @riverpod
+Box<ProductModel> _productsBox(Ref ref) {
+  return ref.watch(productsBoxProvider);
+}
+
+@riverpod
 ProductsRepository productsRepository(Ref ref) {
-  final prefs = ref.watch(sharedPreferencesProvider);
-  return ProductsRepositoryImpl(
-    localDataSource: PurchasesLocalDataSource(prefs: prefs),
-  );
+  final box = ref.watch(_productsBoxProvider);
+  final ds = PurchasesLocalDataSource(box: box);
+  return ProductsRepositoryImpl(localDataSource: ds);
 }
 
 @riverpod

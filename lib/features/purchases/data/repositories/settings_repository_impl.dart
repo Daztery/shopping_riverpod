@@ -8,11 +8,11 @@ class SettingsRepositoryImpl implements SettingsRepository {
 
   @override
   Future<double?> getSpendingLimit() {
-    return localDataSource.loadLimit();
+    return localDataSource.getSpendingLimit();
   }
 
   @override
   Future<void> setSpendingLimit(double? limit) {
-    return localDataSource.saveLimit(limit);
+    return localDataSource.setSpendingLimit(limit);
   }
 }

@@ -6,24 +6,36 @@ part of 'limit_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+String _$settingsBoxHash() => r'0879fcae18d72151f937c06494655fcc6d07c6cb';
+
+/// See also [_settingsBox].
+@ProviderFor(_settingsBox)
+final _settingsBoxProvider = AutoDisposeProvider<Box>.internal(
+  _settingsBox,
+  name: r'_settingsBoxProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$settingsBoxHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _SettingsBoxRef = AutoDisposeProviderRef<Box>;
 String _$settingsRepositoryHash() =>
-    r'e3a4dcbb8b5766c94209ce74fe24be522ec094ea';
+    r'51b9fc8ebf2a7fce89c31de3a20c81dac492c383';
 
 /// See also [settingsRepository].
 @ProviderFor(settingsRepository)
 final settingsRepositoryProvider =
     AutoDisposeProvider<SettingsRepository>.internal(
-      settingsRepository,
-      name: r'settingsRepositoryProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$settingsRepositoryHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  settingsRepository,
+  name: r'settingsRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$settingsRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef SettingsRepositoryRef = AutoDisposeProviderRef<SettingsRepository>;
 String _$getLimitUseCaseHash() => r'8074af7294b5d7ce5604c180985ed30130c24bbb';
 
@@ -39,8 +51,6 @@ final getLimitUseCaseProvider = AutoDisposeProvider<GetLimitUseCase>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef GetLimitUseCaseRef = AutoDisposeProviderRef<GetLimitUseCase>;
 String _$setLimitUseCaseHash() => r'9852429d56f9afc6b8da8e075208fe69c84bdfe3';
 
@@ -56,24 +66,22 @@ final setLimitUseCaseProvider = AutoDisposeProvider<SetLimitUseCase>.internal(
   allTransitiveDependencies: null,
 );
 
-@Deprecated('Will be removed in 3.0. Use Ref instead')
-// ignore: unused_element
 typedef SetLimitUseCaseRef = AutoDisposeProviderRef<SetLimitUseCase>;
-String _$limitControllerHash() => r'61a3b0e7d717411a66d4c42c02c74acfc7c1ca17';
+String _$limitControllerHash() => r'726c58a49cd28661a1afb4b88b802f305c5f5874';
 
 /// See also [LimitController].
 @ProviderFor(LimitController)
 final limitControllerProvider =
     AutoDisposeNotifierProvider<LimitController, LimitState>.internal(
-      LimitController.new,
-      name: r'limitControllerProvider',
-      debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$limitControllerHash,
-      dependencies: null,
-      allTransitiveDependencies: null,
-    );
+  LimitController.new,
+  name: r'limitControllerProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$limitControllerHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
 
 typedef _$LimitController = AutoDisposeNotifier<LimitState>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

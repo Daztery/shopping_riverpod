@@ -1,22 +1,34 @@
-import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
+
 import '../models/product_model.dart';
 
 class PurchasesLocalDataSource {
-  static const _key = 'products_json';
-  final SharedPreferences prefs;
+  final Box<ProductModel> box;
 
-  PurchasesLocalDataSource({required this.prefs});
+  PurchasesLocalDataSource({required this.box});
 
-  Future<List<ProductModel>> load() async {
-    final str = prefs.getString(_key);
-    if (str == null || str.isEmpty) return [];
-    final list = (jsonDecode(str) as List).cast<Map<String, dynamic>>();
-    return list.map(ProductModel.fromJson).toList();
+  Future<List<ProductModel>> getAllProducts() async {
+    return box.values.toList(growable: false);
   }
 
-  Future<void> save(List<ProductModel> products) async {
-    final list = products.map((e) => e.toJson()).toList();
-    await prefs.setString(_key, jsonEncode(list));
+  Future<void> saveAll(List<ProductModel> products) async {
+    await box.clear();
+    await box.addAll(products);
+  }
+
+  Future<void> addProduct(ProductModel product) async {
+    await box.put(product.id, product);
+  }
+
+  Future<void> updateProduct(ProductModel product) async {
+    await box.put(product.id, product);
+  }
+
+  Future<void> deleteProduct(String id) async {
+    await box.delete(id);
+  }
+
+  Future<void> clearAllProducts() async {
+    await box.clear();
   }
 }

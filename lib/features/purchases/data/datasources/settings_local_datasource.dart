@@ -1,21 +1,20 @@
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 
 class SettingsLocalDataSource {
-  static const _limitKey = 'spending_limit';
-  final SharedPreferences prefs;
+  static const String limitKey = 'spending_limit';
+  final Box box;
 
-  SettingsLocalDataSource({required this.prefs});
+  SettingsLocalDataSource({required this.box});
 
-  Future<double?> loadLimit() async {
-    final v = prefs.getDouble(_limitKey);
-    return v;
+  Future<double?> getSpendingLimit() async {
+    return box.get(limitKey);
   }
 
-  Future<void> saveLimit(double? value) async {
+  Future<void> setSpendingLimit(double? value) async {
     if (value == null) {
-      await prefs.remove(_limitKey);
+      await box.delete(limitKey);
     } else {
-      await prefs.setDouble(_limitKey, value);
+      await box.put(limitKey, value);
     }
   }
 }

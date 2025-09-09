@@ -10,12 +10,12 @@ class ProductsRepositoryImpl implements ProductsRepository {
 
   @override
   Future<List<Product>> getAllProducts() {
-    return localDataSource.load();
+    return localDataSource.getAllProducts();
   }
 
   @override
   Future<void> saveAll(List<Product> products) {
-    final models = products.map((e) => ProductModel.fromEntity(e)).toList();
-    return localDataSource.save(models);
+    final models = products.map(ProductModel.fromEntity).toList();
+    return localDataSource.saveAll(models);
   }
 }

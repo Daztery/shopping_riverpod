@@ -1,11 +1,31 @@
+import 'package:hive/hive.dart';
 import 'package:shopping_riverpod/features/purchases/domain/entities/product.dart';
 
-class ProductModel extends Product {
-  const ProductModel({
-    required super.id,
-    required super.name,
-    required super.price,
-    required super.quantity,
+part 'product_model.g.dart';
+
+@HiveType(typeId: 1)
+class ProductModel extends HiveObject implements Product {
+  @override
+  @HiveField(0)
+  final String id;
+
+  @override
+  @HiveField(1)
+  final String name;
+
+  @override
+  @HiveField(2)
+  final double price;
+
+  @override
+  @HiveField(3)
+  final int quantity;
+
+  ProductModel({
+    required this.id,
+    required this.name,
+    required this.price,
+    required this.quantity,
   });
 
   factory ProductModel.fromEntity(Product e) => ProductModel(
@@ -15,17 +35,20 @@ class ProductModel extends Product {
     quantity: e.quantity,
   );
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-    id: json['id'] as String,
-    name: json['name'] as String,
-    price: (json['price'] as num).toDouble(),
-    quantity: json['quantity'] as int,
-  );
+  Product toEntity() =>
+      Product(id: id, name: name, price: price, quantity: quantity);
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'price': price,
-    'quantity': quantity,
-  };
+  ProductModel copyWith({
+    String? id,
+    String? name,
+    double? price,
+    int? quantity,
+  }) {
+    return ProductModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      quantity: quantity ?? this.quantity,
+    );
+  }
 }
